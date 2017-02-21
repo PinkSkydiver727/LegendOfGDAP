@@ -19,7 +19,13 @@ public class isCollectible : Mixin {
                     cd.Insert(this.gameObject);
 
                     // do some sort of disable, so we don't collect it again
-                    GetComponent<SphereCollider>().enabled = false;
+                    GetComponent<BoxCollider>().enabled = false;
+   
+                    if(GetComponent<isPersistent>())
+                    {
+                        GetComponent<isPersistent>().isPickedUp();
+                    }
+
                     if(cd.data.Count == 1)
                     {
                         //SendMessage(OnUseCallback);

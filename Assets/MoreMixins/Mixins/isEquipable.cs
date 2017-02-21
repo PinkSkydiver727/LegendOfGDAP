@@ -39,6 +39,7 @@ public class isEquipable : Mixin
                     rb.isKinematic = true;
                 }
                 iseqs.obj = this.gameObject; //api!
+
                 break;
 
             }
