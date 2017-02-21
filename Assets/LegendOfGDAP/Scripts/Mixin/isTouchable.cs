@@ -31,6 +31,8 @@ public class isTouchable : Mixin {
 		// send a response
 		if (OnTouchCB != "")
 			SendMessage (OnTouchCB);
+
+        //this.enabled = false;
 	}
 		
 	public void DebugMsg()

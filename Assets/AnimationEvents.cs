@@ -13,4 +13,9 @@ public class AnimationEvents : MonoBehaviour {
     {
         GetComponentInChildren<createsProjectile>().Fire();
     }
+
+    void Throw()
+    {
+        GetComponentInChildren<isThrowable>().Throw();
+    }
 }

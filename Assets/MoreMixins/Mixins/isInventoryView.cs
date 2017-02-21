@@ -11,6 +11,10 @@ public class isInventoryView : MonoBehaviour {
 	public List<isInventorySlot>	slots; 
 
 	public GameObject parent;
+    public GameObject highlight;
+    public GameObject selector;
+
+    public int selectorIndex = 0;
 
 	public void OnEnable()
 	{
@@ -25,8 +29,11 @@ public class isInventoryView : MonoBehaviour {
 
 		// populate 
 		isInventorySlot[] sls = this.gameObject.GetComponentsInChildren<isInventorySlot>();
-		foreach (isInventorySlot s in sls)
-			slots.Add (s);
+        foreach (isInventorySlot s in sls)
+        {
+            slots.Add(s);
+        }
+
 
 	}
 
@@ -42,6 +49,7 @@ public class isInventoryView : MonoBehaviour {
 		if (collection != null) 
 		{
 			int i = 0;
+
 			foreach (isInventorySlot iis in slots)
 			{
 				// what if collection.size < slots.size
@@ -58,6 +66,14 @@ public class isInventoryView : MonoBehaviour {
 							slotImage.overrideSprite = ht.img;
 							iis.obj = obj; // keep reference to collection obj in the slot
 						}
+                        if(obj.activeInHierarchy == true)
+                        {
+                            highlight.transform.position = iis.transform.position;
+                        }
+                        if(i == selectorIndex)
+                        {
+                            selector.transform.position = iis.transform.position;
+                        }
 					}
 				}
 				i++;
@@ -65,9 +81,32 @@ public class isInventoryView : MonoBehaviour {
 		}
 	}
 
+    public void Cycle()
+    {
+        selectorIndex++;
+        if (selectorIndex >= collection.data.Count)
+        {
+            selectorIndex = 0;
+        }
+        GameObject obj = collection.GetDataItem(selectorIndex);//data [i];
+
+        isUsable iu = obj.GetComponent<isUsable>();
+        if (iu != null)
+        {
+            // fix disabled object sendmessage failure! 
+            if (obj != null)
+                obj.SetActive(true);
+
+            iu.Use();
+        }
+
+
+    }
+
 	// Update is called once per frame
 	void Update () {
 	
 		isInventoryViewUpdate ();
+        
 	}
 }

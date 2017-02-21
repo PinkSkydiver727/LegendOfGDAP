@@ -21,6 +21,16 @@ public class CollectionData : Data {
 
 	public void Remove(GameObject go)
 	{
-		//todo - dhdh
+        data.Remove(go);
 	}
+
+    public bool Contains(GameObject go)
+    {
+        if(data.Contains(go))
+        {
+            return true;
+        }
+        return false;
+    }
+
 }

@@ -7,6 +7,7 @@ public class AttackResponse : Response
     public GameObject player;
     public Animator anim;
     public isEquipSlot.eSlotType slotType;
+    public string trigger;
 
     public override void Execute()
     {
@@ -23,10 +24,10 @@ public class AttackResponse : Response
                     return;
                 }
                 AnimatorOverrideController animOverride = iseqs.obj.GetComponent<isAttackable>().animOverride;
-                if(animOverride != null)
+                if (animOverride != null)
                 {
                     anim.runtimeAnimatorController = animOverride;
-                    anim.SetTrigger("attack");
+                    anim.SetBool(trigger, true);
                 }
             }
         }

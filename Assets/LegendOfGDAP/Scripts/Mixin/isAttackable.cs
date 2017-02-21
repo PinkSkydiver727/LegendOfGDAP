@@ -6,7 +6,6 @@ public class isAttackable : Mixin
 {
 
     public AnimatorOverrideController animOverride;
-    public float damage;
 	// Use this for initialization
 	void Start () {
 		

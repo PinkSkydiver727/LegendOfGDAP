@@ -7,8 +7,9 @@ public class isUsable : Mixin {
 
 	public void Use()
 	{
-		SendMessage (OnUseCB);
-	}
+        //SendMessage (OnUseCB);
+        GetComponent<isEquipable>().Equip();
+    }
 
 	// Use this for initialization
 	void Start () {

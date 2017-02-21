@@ -37,7 +37,7 @@ public class InputNonZero : Condition {
         }
         else if (Axis == axis.item)
         {
-            if (Input.GetAxis("Fire2") != -1)
+            if (Input.GetAxis("Fire2") != 0)
             {
                 return true;
             }

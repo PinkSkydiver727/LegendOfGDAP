@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class isCollectible : Mixin {
-
+    public string OnUseCallback;
 	public void Collect()
 	{
 		// put me in the collection that matches my name
@@ -14,11 +14,24 @@ public class isCollectible : Mixin {
 		{
 			// insert
 			if (cd.Name == Name) {
-				cd.Insert (this.gameObject);
+                if (!cd.Contains(this.gameObject))
+                {
+                    cd.Insert(this.gameObject);
 
-				// do some sort of disable, so we don't collect it again
-				this.gameObject.SetActive (false);
-			}
+                    // do some sort of disable, so we don't collect it again
+                    GetComponent<SphereCollider>().enabled = false;
+                    if(cd.data.Count == 1)
+                    {
+                        //SendMessage(OnUseCallback);
+                        GetComponent<isUsable>().Use();
+                    }
+                    else
+                    {
+                        this.gameObject.SetActive(false);
+                    }
+
+                }
+            }
 		}
 
 	}
