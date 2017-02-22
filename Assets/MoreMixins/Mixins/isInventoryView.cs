@@ -45,8 +45,7 @@ public class isInventoryView : MonoBehaviour {
 
 	public void isInventoryViewUpdate()
 	{
-        if (collection.data.Count > items)
-        {
+ 
             // map slot image thumbnails to inventory object thumbnails
             // brute force!
             if (collection != null)
@@ -57,6 +56,8 @@ public class isInventoryView : MonoBehaviour {
                 {
                     // what if collection.size < slots.size
                     GameObject obj = collection.GetDataItem(i);//data [i];
+                            // if we have a thumbnail, associate this obj with our slot
+                    Image slotImage = slot.gameObject.GetComponent<Image>();
                     if (obj != null)
                     {
                         hasThumbnail ht = obj.GetComponent<hasThumbnail>();
@@ -79,8 +80,6 @@ public class isInventoryView : MonoBehaviour {
                             //    }
                             //    j++;
                             //}
-                            // if we have a thumbnail, associate this obj with our slot
-                            Image slotImage = slot.gameObject.GetComponent<Image>();
                             if (slotImage != null)
                             {
                                 slotImage.overrideSprite = ht.img;
@@ -100,10 +99,25 @@ public class isInventoryView : MonoBehaviour {
                             }
                         }
                     }
+                    else
+                    {
+                        slotImage.overrideSprite = null;
+                        slot.obj = null;
+                        if (slot.GetComponent<FloatData>() != null)
+                        {
+                            slot.GetComponent<FloatData>().data = 0;
+                        }
+                        if (i != 0)
+                        {    
+                            highlight.transform.position = slots[i - 1].transform.position;
+                            
+                            selector.transform.position = slots[i - 1].transform.position;    
+                        }
+                    }
                     i++;
                 }
             }
-        }
+        
 	}
 
     public void Cycle()
@@ -129,13 +143,15 @@ public class isInventoryView : MonoBehaviour {
                 }
                 iu.Use();
             }
+            isInventoryViewUpdate();
         }
+        
     }
 
 	// Update is called once per frame
 	void Update () {
 	
-		isInventoryViewUpdate ();
+		//isInventoryViewUpdate ();
         
 	}
 }

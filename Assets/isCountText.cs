@@ -11,10 +11,17 @@ public class isCountText : MonoBehaviour {
     {
         text = GetComponent<Text>();
 	}
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update()
     {
-        text.text = (count.data).ToString();	
-	}
+        if (count.data == 0)
+        {
+            text.text = "";
+        }
+        else
+        {
+            text.text = (count.data).ToString();
+        }
+    }
 }
