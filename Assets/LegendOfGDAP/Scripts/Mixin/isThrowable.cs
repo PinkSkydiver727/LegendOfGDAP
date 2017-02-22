@@ -28,13 +28,15 @@ public class isThrowable : Mixin {
                 }
             }
         }
-        GetComponent<BoxCollider>().enabled = true;
+        BoxCollider col = GetComponent<BoxCollider>();
+        col.enabled = true;
+        col.isTrigger = false;
 
         this.transform.parent = null;
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
         rb.useGravity = true;
         rb.isKinematic = false;
-        rb.AddRelativeForce(100.0f, 60.0f, 0.0f);
+        rb.AddRelativeForce(00.0f, -500.0f, 60.0f);
         throwSlot.obj = null;
         if (nextThrowable != null)
         {
