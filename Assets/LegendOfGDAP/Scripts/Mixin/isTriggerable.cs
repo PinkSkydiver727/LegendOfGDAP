@@ -24,10 +24,10 @@ public class isTriggerable : Mixin
         //}
 
         //isCollectible isCol = GetComponent<isCollectible> ();
-        //if (isCol != null)
-        //{
-        //	isCol.SetRecipient (other.gameObject);
-        //}
+        if (GetComponent<isBuff>() != null)
+        {
+            GetComponent<isBuff>().SetRecipient(other.gameObject);
+        }
 
         // send a response
         if (OnTouchCB != "")

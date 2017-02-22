@@ -3,7 +3,9 @@ using System.Collections;
 
 public class isEquipable : Mixin
 {
-
+    public BoolData buffOnEquipOnly;
+    public string BuffCB;
+    public string UnBuffCB;
     public isEquipSlot.eSlotType slotType;
 
     public void Equip()
@@ -24,6 +26,13 @@ public class isEquipable : Mixin
                     iseqs.obj.gameObject.SetActive(false);
                     if (iseqs.obj.GetComponent<isHurtBox>() != null)
                     {
+                        if (iseqs.obj.GetComponent<BoolData>() != null)
+                        {
+                            if (iseqs.obj.GetComponent<BoolData>().data == true)
+                            {
+                                iseqs.obj.GetComponent<isBuff>().RemoveBuff();
+                            }
+                        }
                         iseqs.obj.GetComponent<isHurtBox>().equipped = false;
                     }
                 }
@@ -46,6 +55,13 @@ public class isEquipable : Mixin
                 if (GetComponent<isHurtBox>() != null)
                 {
                     GetComponent<isHurtBox>().equipped = true;
+                    if (buffOnEquipOnly != null)
+                    {
+                        if (BuffCB != "" && buffOnEquipOnly.data == true)
+                        {
+                            SendMessage(BuffCB, transform.root.GetComponent<isStats>());
+                        }
+                    }
                 }
                 break;
 

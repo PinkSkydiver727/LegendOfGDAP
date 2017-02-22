@@ -3,6 +3,8 @@ using System.Collections;
 
 public class isCollectible : Mixin {
     public string InventoryName;
+    public string BuffCB;
+    public BoolData onlyOnEquip;
 	public void Collect()
 	{
 		// put me in the collection that matches my name
@@ -16,13 +18,7 @@ public class isCollectible : Mixin {
 			if (cd.Name == InventoryName) {
                 if (!cd.Contains(this.gameObject))
                 {
-                    foreach(GameObject go in cd.data)
-                    {
-                        if(go.GetComponent<isCollectible>().Name == Name)
-                        {
-
-                        }
-                    }
+                    
                     cd.Insert(this.gameObject);
 
                     // do some sort of disable, so we don't collect it again
@@ -33,6 +29,13 @@ public class isCollectible : Mixin {
                         GetComponent<isPersistent>().isPickedUp();
                     }
 
+                    if (onlyOnEquip != null)
+                    {
+                        if (onlyOnEquip.data == false)
+                        {
+                            SendMessage(BuffCB, GetRecipient().GetComponent<isStats>());
+                        }
+                    }
                     if(cd.data.Count == 1)
                     {
                         //SendMessage(OnUseCallback);
@@ -50,8 +53,17 @@ public class isCollectible : Mixin {
 	}
 
 	// Use this for initialization
-	void Start () {
-	
+	void Start ()
+    {
+        if (onlyOnEquip)
+        {
+            bool rand = false;
+            if (Random.value >= 0.5)
+            {
+                rand = true;
+            }
+            onlyOnEquip.data = rand;
+        }
 	}
 	
 	// Update is called once per frame

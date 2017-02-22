@@ -55,7 +55,7 @@ public class isInventoryView : MonoBehaviour {
                 foreach (isInventorySlot slot in slots)
                 {
                     // what if collection.size < slots.size
-                    GameObject obj = collection.GetDataItem(i);//data [i];
+                    GameObject obj = collection.GetDataItem(i); //data [i];
                             // if we have a thumbnail, associate this obj with our slot
                     Image slotImage = slot.gameObject.GetComponent<Image>();
                     if (obj != null)

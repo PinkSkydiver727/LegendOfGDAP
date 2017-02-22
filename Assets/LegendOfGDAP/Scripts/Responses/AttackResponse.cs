@@ -8,6 +8,7 @@ public class AttackResponse : Response
     public Animator anim;
     public isEquipSlot.eSlotType slotType;
     public string trigger;
+    public FloatData attackSpeedBuff;
 
     public override void Execute()
     {
@@ -27,6 +28,11 @@ public class AttackResponse : Response
                 if (animOverride != null)
                 {
                     anim.runtimeAnimatorController = animOverride;
+                    if (attackSpeedBuff != null)
+                    {
+                        anim.SetFloat("attackSpeed", attackSpeedBuff.data);
+                    }
+
                     anim.SetBool(trigger, true);
                 }
             }

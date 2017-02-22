@@ -21,18 +21,10 @@ public class isThrowable : Mixin {
             // insert
             if (cd.Name == Name)
             {
-                cd.Remove(this.gameObject);
-                if(cd.GetGameObjectCount(this.gameObject) > 0)
+                GameObject next = cd.RemoveAndReturn(this.gameObject);
+                if (next != null)
                 {
-                    isThrowable[] throws = transform.parent.GetComponentsInChildren<isThrowable>(true);
-                    foreach(isThrowable throwable in throws)
-                    {
-                        if(throwable.Name == Name && throwable != this)
-                        {
-                            nextThrowable = throwable;
-                            break;
-                        }
-                    }
+                    nextThrowable = next.GetComponent<isThrowable>();
                 }
             }
         }

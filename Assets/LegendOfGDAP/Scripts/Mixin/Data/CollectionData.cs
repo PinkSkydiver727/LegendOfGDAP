@@ -2,122 +2,135 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class CollectionData : Data {
+public class CollectionData : Data
+{
     public bool StackCollectables;
-	public List<GameObject>	data;
-    public List<int> dataCount;
-    public isInventoryView inventory;
-	public GameObject GetDataItem(int i)
-	{
-		GameObject rval = null;
-		if (i < data.Count)
-			rval = data [i];
+    public List<List<GameObject>> data = new List<List<GameObject>>();
 
-		return rval;
-	}
+    public isInventoryView inventory;
+    public GameObject GetDataItem(int i)
+    {
+        GameObject rval = null;
+        if (i < data.Count)
+            rval = data[i][0];
+
+        return rval;
+    }
 
     public int GetDataCount(int i)
     {
         int rval = 0;
         if (i < data.Count)
-            rval = dataCount[i];
+            rval = data[i].Count;
 
         return rval;
     }
 
     public int GetGameObjectCount(GameObject go)
     {
-        int i = 0;
-        foreach (GameObject obj in data)
+        foreach (List<GameObject> objs in data)
         {
-            string goName = go.GetComponent<isCollectible>().Name;
-            string objName = obj.GetComponent<isCollectible>().Name;
-            if (goName == objName)
+            if (objs.Contains(go))
             {
-                if (inventory != null)
-                {
-                    inventory.isInventoryViewUpdate();
-                }
-                return dataCount[i];
+                return objs.Count;
             }
-            i++;
 
         }
 
         return 0;
-        
+
     }
 
 
     public void Insert(GameObject go)
-	{
+    {
         if (StackCollectables)
         {
             int i = 0;
-            foreach (GameObject obj in data)
+            foreach (List<GameObject> objs in data)
             {
-                string goName = go.GetComponent<isCollectible>().Name;
-                string objName = obj.GetComponent<isCollectible>().Name;
-                if (goName == objName)
+                foreach (GameObject obj in objs)
                 {
-                    dataCount[i]++;
-                    if (inventory != null)
+                    string goName = go.GetComponent<isCollectible>().Name;
+                    string objName = obj.GetComponent<isCollectible>().Name;
+                    if (goName == objName)
                     {
-                        inventory.isInventoryViewUpdate();
+                        objs.Add(go);
+                        if (inventory != null)
+                        {
+                            inventory.isInventoryViewUpdate();
+                        }
+                        return;
                     }
-                    return;
+                    i++;
                 }
-                i++;
-
             }
         }
-        dataCount.Add(1);
-        data.Add(go);
+        List<GameObject> newObjs = new List<GameObject>();
+        newObjs.Add(go);
+        data.Add(newObjs);
         inventory.isInventoryViewUpdate();
-	}
+    }
 
-	public void Remove(GameObject go)
-	{
-        if (StackCollectables)
+    public void Remove(GameObject go)
+    {
+       
+        foreach (List<GameObject> objs in data)
         {
-            int i = 0;
-            foreach (GameObject obj in data)
+            if (objs.Contains(go))
             {
-                string goName = go.GetComponent<isCollectible>().Name;
-                string objName = obj.GetComponent<isCollectible>().Name;
-                if (goName == objName)
+                objs.Remove(go);
+                if(objs.Count == 0)
                 {
-                    dataCount[i]--;
-                    if(dataCount[i] == 0)
-                    {
-                        data.Remove(go);
-                        dataCount.RemoveAt(i);
-                        
-                    }
-                    if (inventory != null)
-                    {
-                        inventory.isInventoryViewUpdate();
-                    }
-                    return;
+                    data.Remove(objs);
                 }
-                i++;
-
             }
-        }
-
-
-        data.Remove(go);
-        if (inventory != null)
-        {
-            inventory.isInventoryViewUpdate();
+                 
+            if (inventory != null)
+            {
+                inventory.isInventoryViewUpdate();
+            }
+            return;
         }
     }
 
+    public GameObject RemoveAndReturn(GameObject go)
+    {
+
+        foreach (List<GameObject> objs in data)
+        {
+            if (objs.Contains(go))
+            {
+                objs.Remove(go);
+                if (objs.Count == 0)
+                {
+                    data.Remove(objs);
+                    {
+                        inventory.isInventoryViewUpdate();
+                    }
+                    return null;
+                }
+                if (inventory != null)
+                {
+                    inventory.isInventoryViewUpdate();
+                }
+                return objs[0];
+            }
+
+            
+        }
+        return null;
+    }
+
+
     public bool Contains(GameObject go)
     {
-        if(data.Contains(go))
+        foreach (List<GameObject> objs in data)
         {
-            return true;
+            if (objs.Contains(go))
+            {
+                return true;
+            }
         }
         return false;
     }

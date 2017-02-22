@@ -4,13 +4,26 @@ using UnityEngine;
 
 public class isPlayer : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
+    public FloatData damageBuff;
+    public FloatData sizeBuff;
+    Vector3 initScale; 
+    // Use this for initialization
+    void Start () {
+        initScale = transform.localScale;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    // Update is called once per frame
+    
+
+    public void ApplyBuff()
+    {
+        isHurtBox[] hurtBoxs = GetComponentsInChildren<isHurtBox>();
+        foreach(isHurtBox hurtBox in hurtBoxs)
+        {
+            hurtBox.damageBuff = damageBuff.data;
+        }
+
+        transform.localScale = initScale * sizeBuff.data;
+
+    }
 }

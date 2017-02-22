@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class MoveResponse : Response
 {
-    public float moveSpeed = 5.0f;
+    public float baseMoveSpeed = 5.0f;
     public GameObject player;
     public Animator anim;
+    public FloatData moveSpeedBuff;
     public string animParameter;
     int isNeg = 1;
     public override void Execute()
@@ -33,7 +34,8 @@ public class MoveResponse : Response
             {
                 //player.transform.Rotate(new Vector3(0, 1, 0), -90.0f * isNeg);
             }
-            player.transform.position += y * this.transform.forward * moveSpeed * Time.deltaTime;
+            player.transform.position += y * this.transform.forward * baseMoveSpeed * Time.deltaTime * moveSpeedBuff.data;
+            
             anim.SetFloat(animParameter, y);
         }
         else
@@ -56,7 +58,8 @@ public class MoveResponse : Response
             {
                // player.transform.Rotate(new Vector3(0, 1, 0), 90.0f * isNeg);
             }
-            player.transform.position += x * this.transform.forward * moveSpeed * Time.deltaTime;
+            player.transform.position += x * this.transform.forward * baseMoveSpeed * Time.deltaTime * moveSpeedBuff.data;
+            
             anim.SetFloat(animParameter, x);
         }
     }

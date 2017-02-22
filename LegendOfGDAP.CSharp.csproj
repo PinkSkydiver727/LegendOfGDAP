@@ -108,6 +108,7 @@
     <Compile Include="Assets\LegendOfGDAP\Scripts\Mixin\isAttackable.cs" />
     <Compile Include="Assets\LegendOfGDAP\Scripts\Mixin\isBoundry.cs" />
     <Compile Include="Assets\LegendOfGDAP\Scripts\Mixin\isCollectionView.cs" />
+    <Compile Include="Assets\LegendOfGDAP\Scripts\Mixin\isEquipable.cs" />
     <Compile Include="Assets\LegendOfGDAP\Scripts\Mixin\isHighlight.cs" />
     <Compile Include="Assets\LegendOfGDAP\Scripts\Mixin\isHurtBox.cs" />
     <Compile Include="Assets\LegendOfGDAP\Scripts\Mixin\isPlayer.cs" />
@@ -140,16 +141,19 @@
     <Compile Include="Assets\MoreMixins\Mixins\isColorChanger.cs" />
     <Compile Include="Assets\MoreMixins\Mixins\isConsumable.cs" />
     <Compile Include="Assets\MoreMixins\Mixins\isEquipSlot.cs" />
-    <Compile Include="Assets\MoreMixins\Mixins\isEquipable.cs" />
     <Compile Include="Assets\MoreMixins\Mixins\isInventorySlot.cs" />
     <Compile Include="Assets\MoreMixins\Mixins\isInventoryView.cs" />
     <Compile Include="Assets\MoreMixins\Mixins\isLevitator.cs" />
     <Compile Include="Assets\MoreMixins\Mixins\isUsable.cs" />
     <Compile Include="Assets\amIDead.cs" />
+    <Compile Include="Assets\isBuff.cs" />
     <Compile Include="Assets\isCoin.cs" />
     <Compile Include="Assets\isCollidable.cs" />
     <Compile Include="Assets\isCountText.cs" />
+    <Compile Include="Assets\isEnemy.cs" />
     <Compile Include="Assets\isPersistent.cs" />
+    <Compile Include="Assets\isStat.cs" />
+    <Compile Include="Assets\isStats.cs" />
     <Compile Include="Assets\isStorable.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />

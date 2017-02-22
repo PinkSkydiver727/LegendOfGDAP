@@ -6,6 +6,10 @@ public class isHurtBox : MonoBehaviour {
 
     public Collider hurtBox;
     public int damage;
+    
+    [HideInInspector]
+    public float damageBuff;
+
     public int force;
     public GameObject coin;
     public int numCoins;
@@ -23,8 +27,14 @@ public class isHurtBox : MonoBehaviour {
     {
         if (equipped)
         {
-            if (other.gameObject != this.transform.root.gameObject)
+            Transform rootTransform = this.transform.root;
+            if (other.gameObject != rootTransform.gameObject)
             {
+
+                if (rootTransform.GetComponent<isPlayer>())
+                {
+                    rootTransform.GetComponent<isPlayer>().ApplyBuff();
+                }
                 FloatData[] stats = other.GetComponents<FloatData>();
                 foreach (FloatData stat in stats)
                 {
@@ -32,9 +42,9 @@ public class isHurtBox : MonoBehaviour {
                     {
                         if (other.GetComponent<Rigidbody>())
                         {
-                            other.GetComponent<Rigidbody>().AddForce(transform.root.transform.forward * force);
+                            other.GetComponent<Rigidbody>().AddForce(rootTransform.forward * force);
                         }
-                        stat.data -= damage;
+                        stat.data -= damage * damageBuff;
                         print("hit " + other.name + " with " + this.gameObject.name);
 
                         if(numCoins > 0)
@@ -58,10 +68,7 @@ public class isHurtBox : MonoBehaviour {
         
     }
 
-    void Start()
-    {
-        
-    }
+    
 
     
 
