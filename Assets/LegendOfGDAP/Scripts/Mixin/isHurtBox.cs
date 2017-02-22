@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class isHurtBox : MonoBehaviour {
 
-    public BoxCollider hurtBox;
+    public Collider hurtBox;
     public int damage;
     public int force;
+    public GameObject coin;
+    public int numCoins;
     public bool active;
-    bool equipped;
+    public bool equipped;
     public enum hurtType
     {
         RightHand,
@@ -34,7 +36,15 @@ public class isHurtBox : MonoBehaviour {
                         }
                         stat.data -= damage;
                         print("hit " + other.name + " with " + this.gameObject.name);
-                        hurtBox.enabled = false;
+
+                        if(numCoins > 0)
+                        {
+                            for(int i = 0; i <= numCoins; i++)
+                            {
+                                Instantiate(coin, other.transform.position, Quaternion.identity);
+                            }
+                        }
+                        //hurtBox.enabled = false;
                         
                     }
                 }
@@ -50,7 +60,6 @@ public class isHurtBox : MonoBehaviour {
 
     void Start()
     {
-        equipped = true;
         
     }
 

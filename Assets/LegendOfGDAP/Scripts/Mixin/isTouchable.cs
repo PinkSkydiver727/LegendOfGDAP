@@ -36,6 +36,7 @@ public class isTouchable : Mixin {
 
             //this.enabled = false;
             GetComponent<BoxCollider>().enabled = false;
+
             this.enabled = false;
         }
     }	

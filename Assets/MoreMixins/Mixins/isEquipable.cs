@@ -22,6 +22,10 @@ public class isEquipable : Mixin
                 if (iseqs.obj != null)
                 {
                     iseqs.obj.gameObject.SetActive(false);
+                    if (iseqs.obj.GetComponent<isHurtBox>() != null)
+                    {
+                        iseqs.obj.GetComponent<isHurtBox>().equipped = false;
+                    }
                 }
 
                 Quaternion rot = this.transform.localRotation;
@@ -39,7 +43,10 @@ public class isEquipable : Mixin
                     rb.isKinematic = true;
                 }
                 iseqs.obj = this.gameObject; //api!
-
+                if (GetComponent<isHurtBox>() != null)
+                {
+                    GetComponent<isHurtBox>().equipped = true;
+                }
                 break;
 
             }

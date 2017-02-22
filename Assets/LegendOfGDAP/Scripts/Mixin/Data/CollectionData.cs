@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class CollectionData : Data {
-
+    public bool StackCollectables;
 	public List<GameObject>	data;
-
+    public List<int> dataCount;
 	public GameObject GetDataItem(int i)
 	{
 		GameObject rval = null;
@@ -14,13 +14,63 @@ public class CollectionData : Data {
 
 		return rval;
 	}
-	public void Insert(GameObject go)
+
+    public int GetDataCount(int i)
+    {
+        int rval = 0;
+        if (i < data.Count)
+            rval = dataCount[i];
+
+        return rval;
+    }
+
+    public void Insert(GameObject go)
 	{
-		data.Add(go);
+        if (StackCollectables)
+        {
+            int i = 0;
+            foreach (GameObject obj in data)
+            {
+                string goName = go.GetComponent<isCollectible>().Name;
+                string objName = obj.GetComponent<isCollectible>().Name;
+                if (goName == objName)
+                {
+                    dataCount[i]++;
+                    return;
+                }
+                i++;
+
+            }
+        }
+        dataCount.Add(1);
+        data.Add(go);
 	}
 
 	public void Remove(GameObject go)
 	{
+        if (StackCollectables)
+        {
+            int i = 0;
+            foreach (GameObject obj in data)
+            {
+                string goName = go.GetComponent<isCollectible>().Name;
+                string objName = obj.GetComponent<isCollectible>().Name;
+                if (goName == objName)
+                {
+                    dataCount[i]--;
+                    if(dataCount[i] == 0)
+                    {
+                        data.Remove(go);
+                        dataCount.RemoveAt(i);
+                    }
+                    return;
+                }
+                i++;
+
+            }
+        }
+
+
         data.Remove(go);
 	}
 

@@ -14,6 +14,7 @@ public class isInventoryView : MonoBehaviour {
     public GameObject highlight;
     public GameObject selector;
 
+    public int items;
     public int selectorIndex = 0;
 
 	public void OnEnable()
@@ -44,63 +45,91 @@ public class isInventoryView : MonoBehaviour {
 
 	public void isInventoryViewUpdate()
 	{
-		// map slot image thumbnails to inventory object thumbnails
-		// brute force!
-		if (collection != null) 
-		{
-			int i = 0;
+        if (collection.data.Count > items)
+        {
+            // map slot image thumbnails to inventory object thumbnails
+            // brute force!
+            if (collection != null)
+            {
+                int i = 0;
 
-			foreach (isInventorySlot iis in slots)
-			{
-				// what if collection.size < slots.size
-				GameObject obj = collection.GetDataItem(i);//data [i];
-				if (obj != null)
-				{
-					hasThumbnail ht = obj.GetComponent<hasThumbnail> ();
-					if (ht != null)
-					{
-						// if we have a thumbnail, associate this obj with our slot
-						Image slotImage = iis.gameObject.GetComponent<Image>();
-						if (slotImage != null)
-						{
-							slotImage.overrideSprite = ht.img;
-							iis.obj = obj; // keep reference to collection obj in the slot
-						}
-                        if(obj.activeInHierarchy == true)
+                foreach (isInventorySlot slot in slots)
+                {
+                    // what if collection.size < slots.size
+                    GameObject obj = collection.GetDataItem(i);//data [i];
+                    if (obj != null)
+                    {
+                        hasThumbnail ht = obj.GetComponent<hasThumbnail>();
+                        if (ht != null)
                         {
-                            highlight.transform.position = iis.transform.position;
+                            //int j = 0;
+                            //foreach (isInventorySlot checkSlot in slots)
+                            //{
+                            //    if (j < i)
+                            //    {
+                            //        if (checkSlot.obj != null)
+                            //        {
+                            //            string checkName = checkSlot.obj.GetComponent<isCollectible>().Name;
+                            //            string nameInSlot = obj.GetComponent<isCollectible>().Name;
+                            //            if (checkName == nameInSlot)
+                            //            {
+                            //                print("duplicate");
+                            //            }
+                            //        }
+                            //    }
+                            //    j++;
+                            //}
+                            // if we have a thumbnail, associate this obj with our slot
+                            Image slotImage = slot.gameObject.GetComponent<Image>();
+                            if (slotImage != null)
+                            {
+                                slotImage.overrideSprite = ht.img;
+                                slot.obj = obj; // keep reference to collection obj in the slot
+                                if(slot.GetComponent<FloatData>() != null)
+                                {
+                                    slot.GetComponent<FloatData>().data = collection.GetDataCount(i);
+                                }
+                            }
+                            if (obj.activeInHierarchy == true)
+                            {
+                                highlight.transform.position = slot.transform.position;
+                            }
+                            if (i == selectorIndex)
+                            {
+                                selector.transform.position = slot.transform.position;
+                            }
                         }
-                        if(i == selectorIndex)
-                        {
-                            selector.transform.position = iis.transform.position;
-                        }
-					}
-				}
-				i++;
-			}
-		}
+                    }
+                    i++;
+                }
+            }
+        }
 	}
 
     public void Cycle()
     {
-        selectorIndex++;
-        if (selectorIndex >= collection.data.Count)
+        if (collection.data.Count >= 1)
         {
-            selectorIndex = 0;
+            selectorIndex++;
+            if (selectorIndex >= collection.data.Count)
+            {
+                selectorIndex = 0;
+            }
+            GameObject obj = collection.GetDataItem(selectorIndex);//data [i];
+
+
+            if (obj.GetComponent<isUsable>() != null)
+            {
+                isUsable iu = obj.GetComponent<isUsable>();
+                // fix disabled object sendmessage failure! 
+                if (obj != null)
+                {
+                    obj.SetActive(true);
+                    //obj.GetComponent<isHurtBox>().equipped = true;
+                }
+                iu.Use();
+            }
         }
-        GameObject obj = collection.GetDataItem(selectorIndex);//data [i];
-
-        isUsable iu = obj.GetComponent<isUsable>();
-        if (iu != null)
-        {
-            // fix disabled object sendmessage failure! 
-            if (obj != null)
-                obj.SetActive(true);
-
-            iu.Use();
-        }
-
-
     }
 
 	// Update is called once per frame

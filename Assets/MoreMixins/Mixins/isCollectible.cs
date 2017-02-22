@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class isCollectible : Mixin {
-    public string OnUseCallback;
+    public string InventoryName;
 	public void Collect()
 	{
 		// put me in the collection that matches my name
@@ -13,13 +13,20 @@ public class isCollectible : Mixin {
 		foreach (CollectionData cd in cdatas)
 		{
 			// insert
-			if (cd.Name == Name) {
+			if (cd.Name == InventoryName) {
                 if (!cd.Contains(this.gameObject))
                 {
+                    foreach(GameObject go in cd.data)
+                    {
+                        if(go.GetComponent<isCollectible>().Name == Name)
+                        {
+
+                        }
+                    }
                     cd.Insert(this.gameObject);
 
                     // do some sort of disable, so we don't collect it again
-                    GetComponent<BoxCollider>().enabled = false;
+                    //GetComponent<BoxCollider>().enabled = false;
    
                     if(GetComponent<isPersistent>())
                     {
