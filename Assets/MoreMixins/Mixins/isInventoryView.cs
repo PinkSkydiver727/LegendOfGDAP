@@ -15,7 +15,7 @@ public class isInventoryView : MonoBehaviour {
     public GameObject selector;
 
     public int items;
-    public int selectorIndex = 0;
+    public int selectorIndex = 1;
 
 	public void OnEnable()
 	{
@@ -88,14 +88,14 @@ public class isInventoryView : MonoBehaviour {
                                 {
                                     slot.GetComponent<FloatData>().data = collection.GetDataCount(i);
                                 }
-                            }
-                            if (obj.activeInHierarchy == true)
-                            {
-                                highlight.transform.position = slot.transform.position;
-                            }
-                            if (i == selectorIndex)
-                            {
-                                selector.transform.position = slot.transform.position;
+                                if (obj.activeInHierarchy == true)
+                                {
+                                    highlight.transform.position = slot.transform.position;
+                                }
+                                if (i+1 == selectorIndex)
+                                {
+                                    selector.transform.localPosition = slot.transform.localPosition;
+                                }
                             }
                         }
                     }
@@ -107,12 +107,12 @@ public class isInventoryView : MonoBehaviour {
                         {
                             slot.GetComponent<FloatData>().data = 0;
                         }
-                        if (i != 0)
-                        {    
-                            highlight.transform.position = slots[i - 1].transform.position;
+                        //if (i != 0)
+                        //{    
+                        //    highlight.transform.position = slots[i - 1].transform.position;
                             
-                            selector.transform.position = slots[i - 1].transform.position;    
-                        }
+                        //    selector.transform.position = slots[i - 1].transform.position;    
+                        //}
                     }
                     i++;
                 }
@@ -125,11 +125,11 @@ public class isInventoryView : MonoBehaviour {
         if (collection.data.Count >= 1)
         {
             selectorIndex++;
-            if (selectorIndex >= collection.data.Count)
+            if (selectorIndex > collection.data.Count)
             {
-                selectorIndex = 0;
+                selectorIndex = 1;
             }
-            GameObject obj = collection.GetDataItem(selectorIndex);//data [i];
+            GameObject obj = collection.GetDataItem(selectorIndex - 1);//data [i];
 
 
             if (obj.GetComponent<isUsable>() != null)

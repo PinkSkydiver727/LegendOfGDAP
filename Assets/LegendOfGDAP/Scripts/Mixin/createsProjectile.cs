@@ -21,13 +21,12 @@ public class createsProjectile : Mixin {
             if (iseqs.slotType == slotType)
             {
                 // turn off active weapon
-                if (iseqs.obj == null)
-                {
+                
                     proj.transform.parent = iseqs.transform;
                     proj.transform.localPosition = Vector3.zero;
                     proj.transform.localRotation = Quaternion.identity;
 
-                }
+                
             }
         }
    }
@@ -35,11 +34,14 @@ public class createsProjectile : Mixin {
     public void Fire()
     {
         proj.transform.parent = null;
+        Vector3 rot = proj.transform.rotation.eulerAngles;
+        rot.x = 0;
+        rot.z = 0;
+        proj.transform.eulerAngles = rot;
         Rigidbody rb = proj.GetComponent<Rigidbody>();
         rb.useGravity = true;
         rb.AddRelativeForce(0.0f, 150.0f, 500.0f);
-
-
+        
     }
     // Use this for initialization
     public void Start()
