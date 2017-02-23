@@ -29,6 +29,14 @@ public class isTriggerable : Mixin
             GetComponent<isBuff>().SetRecipient(other.gameObject);
         }
 
+        if(recipient != null)
+        {
+            if(other.gameObject.name != recipient.name)
+            {
+                return;
+            }
+        }
+
         // send a response
         if (OnTouchCB != "")
             SendMessage(OnTouchCB);

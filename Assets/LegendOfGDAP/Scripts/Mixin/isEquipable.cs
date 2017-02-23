@@ -4,6 +4,7 @@ using System.Collections;
 public class isEquipable : Mixin
 {
     public BoolData buffOnEquipOnly;
+    public bool triggerOnEquip;
     public string BuffCB;
     public string UnBuffCB;
     public isEquipSlot.eSlotType slotType;
@@ -62,6 +63,10 @@ public class isEquipable : Mixin
                             SendMessage(BuffCB, transform.root.GetComponent<isStats>());
                         }
                     }
+                }
+                if(triggerOnEquip)
+                {
+                    GetComponent<BoxCollider>().enabled = true;
                 }
                 break;
 

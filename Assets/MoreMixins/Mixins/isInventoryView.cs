@@ -11,7 +11,6 @@ public class isInventoryView : MonoBehaviour {
 	public List<isInventorySlot>	slots; 
 
 	public GameObject parent;
-    public GameObject highlight;
     public GameObject selector;
 
     public int items;
@@ -88,10 +87,7 @@ public class isInventoryView : MonoBehaviour {
                                 {
                                     slot.GetComponent<FloatData>().data = collection.GetDataCount(i);
                                 }
-                                if (obj.activeInHierarchy == true)
-                                {
-                                    highlight.transform.position = slot.transform.position;
-                                }
+
                                 if (i+1 == selectorIndex)
                                 {
                                     selector.transform.localPosition = slot.transform.localPosition;

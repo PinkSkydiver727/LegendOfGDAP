@@ -18,6 +18,7 @@ public class amIDead : MonoBehaviour {
         {
             GetComponent<Animator>().SetTrigger("die");
             isDead = true;
+            //GetComponent<isPersistent>().isDead();
         }
 	}
 }

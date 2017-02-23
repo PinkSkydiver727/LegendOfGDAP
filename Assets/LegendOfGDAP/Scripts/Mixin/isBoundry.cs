@@ -23,6 +23,9 @@ public class isBoundry : Mixin {
     {
         col = GetComponent<BoxCollider>();
         cameraLoc = GameObject.Find("CameraLoc");
+
+        GetComponent<isTriggerable>().SetRecipient(GameObject.Find("Player"));
+
         SetRecipient(Camera.main.gameObject);
         roomManager = recipient.GetComponent<RoomManager>();
         isMoving = recipient.GetComponent<BoolData>();

@@ -37,12 +37,16 @@ public class isThrowable : Mixin {
         rb.useGravity = true;
         rb.isKinematic = false;
         rb.AddRelativeForce(00.0f, -500.0f, 60.0f);
-        throwSlot.obj = null;
+        if (throwSlot != null)
+        {
+            throwSlot.obj = null;
+        }
         if (nextThrowable != null)
         {
             nextThrowable.gameObject.SetActive(true);
             nextThrowable.enableNext();
         }
+        this.gameObject.SetActive(true);
 
     }
 

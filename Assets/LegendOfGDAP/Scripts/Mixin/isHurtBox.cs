@@ -33,7 +33,7 @@ public class isHurtBox : MonoBehaviour {
 
                 if (rootTransform.GetComponent<isPlayer>())
                 {
-                    rootTransform.GetComponent<isPlayer>().ApplyBuff();
+                    //rootTransform.GetComponent<isPlayer>().ApplyBuff();
                 }
                 FloatData[] stats = other.GetComponents<FloatData>();
                 foreach (FloatData stat in stats)

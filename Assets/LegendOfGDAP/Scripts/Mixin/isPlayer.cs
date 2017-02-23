@@ -9,13 +9,13 @@ public class isPlayer : MonoBehaviour {
     Vector3 initScale; 
     // Use this for initialization
     void Start () {
-        initScale = transform.localScale;
+        initScale = transform.Find("Link").localScale;
 	}
 
     // Update is called once per frame
     
 
-    public void ApplyBuff()
+    public void Update()
     {
         isHurtBox[] hurtBoxs = GetComponentsInChildren<isHurtBox>();
         foreach(isHurtBox hurtBox in hurtBoxs)
@@ -23,7 +23,7 @@ public class isPlayer : MonoBehaviour {
             hurtBox.damageBuff = damageBuff.data;
         }
 
-        transform.localScale = initScale * sizeBuff.data;
+        transform.Find("Link").localScale = initScale * sizeBuff.data;
 
     }
 }

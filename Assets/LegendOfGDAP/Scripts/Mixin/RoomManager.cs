@@ -6,7 +6,7 @@ public class RoomManager : MonoBehaviour
 {
 
     static RoomManager This;
-    public string NextLevelName = "Room00";  //gameplay level to load
+    public string NextLevelName;  //gameplay level to load
 
     public Scene currentScene;
     public Scene prevScene;

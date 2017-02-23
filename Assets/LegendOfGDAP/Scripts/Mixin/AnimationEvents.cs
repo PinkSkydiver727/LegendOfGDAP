@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class AnimationEvents : MonoBehaviour {
 
+    RoomManager roomMgr;
+    void UseKey()
+    {
+        if (GetComponentInChildren<isKey>() != null )
+        {
+            GetComponentInChildren<isKey>().UseKey();
+        }
+    }
 	void Spawn()
     {
         GetComponentInChildren<createsProjectile>().Spawn();
@@ -41,5 +49,19 @@ public class AnimationEvents : MonoBehaviour {
                 }
             }
         }  
+    }
+
+    void Dead()
+    {
+        Destroy(GameObject.Find("Directional Light"));
+        Destroy(GameObject.Find("GameManager"));
+        Destroy(GameObject.Find("CameraLoc"));
+        GameObject cam = Camera.main.gameObject;
+        roomMgr = cam.GetComponent<RoomManager>();
+        
+        roomMgr.LoadNextLevel("Lobby");
+        Destroy(cam);
+
+        Destroy(this.gameObject);
     }
 }
